@@ -19,7 +19,6 @@
     * [Virtual environment](https://virtualenv.pypa.io/en/stable/installation.html)
 
         This ensures you'll be able to install the correct packages without interfering with Python on your machine.
-
         Before you begin, please ensure you have this installed globally. 
 
 
@@ -49,4 +48,6 @@
 
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+
+    pytest --cov=. --cov-report html
 
