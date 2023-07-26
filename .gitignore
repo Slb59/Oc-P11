@@ -6,3 +6,6 @@ lib
 .envrc
 __pycache__
 .venv
+
+# no tests cache
+.pytest_cache
