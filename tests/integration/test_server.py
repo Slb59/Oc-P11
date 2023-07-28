@@ -8,5 +8,6 @@ def test_home_should_status_code_ok(client):
 
 # def test_should_return_hello_world(client):
 #     response = client.get('/')
-#     data = response.data.decode()  # Permet de décoder la data dans la requête
+#     data = response.data.decode()
+# # Permet de décoder la data dans la requête
 #     assert data == 'Hello, World!'
