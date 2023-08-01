@@ -1,15 +1,15 @@
 import pytest
 
-# from gudlft.server import create_app
+from gudlft.server import app
 
 
-# @pytest.fixture
-# def client():
+@pytest.fixture
+def client():
 
-#     # app = create_app({"TESTING": True})
+    # app = create_app({"TESTING": True})
 
-#     with app.test_client() as client:
-#         yield client
+    with app.test_client() as client:
+        yield client
 
 
 @pytest.fixture
@@ -26,19 +26,9 @@ def clubtest():
 def test_clubs_data():
     return [
         {
-            "name": "Simply Lift",
-            "email": "john@simplylift.co",
+            "name": "club for test",
+            "email": "club@exemple.com",
             "points": "13"
-        },
-        {
-            "name": "Iron Temple",
-            "email": "admin@irontemple.com",
-            "points": "4"
-        },
-        {
-            "name": "She Lifts",
-            "email": "kate@shelifts.co.uk",
-            "points": "12"
         }
     ]
 

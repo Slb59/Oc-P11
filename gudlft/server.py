@@ -58,7 +58,8 @@ def book(competition, club):
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
     competition = [
-        c for c in data.competitions if c['name'] == request.form['competition']
+        c for c in data.competitions
+        if c['name'] == request.form['competition']
         ][0]
     club = [c for c in data.clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
