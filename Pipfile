@@ -15,6 +15,7 @@ coverage = "*"
 pytest-cov = "*"
 locust = "*"
 flake8 = "*"
+django = "*"
 pytest-mock = "*"
 
 [dev-packages]

@@ -1,20 +1,22 @@
 import pytest
 
-from gudlft.server import create_app
+# from gudlft.server import create_app
 
 
-@pytest.fixture
-def client():
-    app = create_app({"TESTING": True})
-    with app.test_client() as client:
-        yield client
+# @pytest.fixture
+# def client():
+
+#     # app = create_app({"TESTING": True})
+
+#     with app.test_client() as client:
+#         yield client
 
 
 @pytest.fixture
 def clubtest():
     club1 = {
         "name": "Club to test",
-        "email": "club@gmail.com",
+        "email": "club@example.com",
         "points": "5"
     }
     return club1
