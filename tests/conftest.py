@@ -23,7 +23,7 @@ def clubtest():
 
 
 @pytest.fixture
-def clubs_data():
+def test_clubs_data():
     return [
         {
             "name": "Simply Lift",
@@ -44,7 +44,7 @@ def clubs_data():
 
 
 @pytest.fixture
-def competitions_data():
+def test_competitions_data():
     return [
         {
             "name": "Spring Festival",
