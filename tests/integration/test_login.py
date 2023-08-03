@@ -49,3 +49,8 @@ class TestLoginLogout:
         data = response.data.decode()
         assert "<li>!!! Cette adresse email n&#39;est pas reconnue</li>"\
             in data
+
+    def test_logout(self):
+
+        result = self.client.get("/logout")
+        assert result.status_code == 302

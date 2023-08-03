@@ -40,3 +40,21 @@ class DataLoader:
         for comp in self.competitions:
             message += f"- {comp}\n"
         return message
+
+
+class Club:
+    def __init__(self, **kwargs):
+        for kwarg in kwargs:
+            setattr(self, kwarg, kwargs[kwarg])
+
+    def __str__(self) -> str:
+        return f"<Club - {self.name}>"
+
+
+class Competition:
+    def __init__(self, **kwargs):
+        for kwarg in kwargs:
+            setattr(self, kwarg, kwargs[kwarg])
+
+    def __str__(self) -> str:
+        return f"<Competition - {self.name}>"

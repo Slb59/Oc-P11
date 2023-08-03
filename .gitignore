@@ -6,6 +6,7 @@ lib
 .envrc
 __pycache__
 .venv
+.vscode
 
 # no tests cache
 .pytest_cache

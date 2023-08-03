@@ -23,10 +23,10 @@ def showSummary():
             if club['email'] == request.form['email']
             ][0]
         return render_template(
-            'welcome.html',
-            club=club,
-            competitions=data.competitions
-            )
+                'welcome.html',
+                club=club,
+                competitions=data.competitions
+                ) 
     except IndexError:
         flash("!!! Cette adresse email n'est pas reconnue")
         return render_template(

@@ -3,7 +3,7 @@ from gudlft.server import app
 from gudlft.db import DataLoader
 
 
-class TestGudlft:
+class TestPurchasePlaces:
 
     # load the test database
     data = DataLoader(
@@ -36,3 +36,4 @@ class TestGudlft:
             competition_places_before - places_booked
         assert int(server.data.clubs[0]["points"]) == \
             club_points_before - places_booked
+        assert int(server.data.clubs[0]["points"]) >= 0
