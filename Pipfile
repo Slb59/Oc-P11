@@ -19,6 +19,7 @@ django = "*"
 pytest-mock = "*"
 selenium = "*"
 webdriver-manager = "*"
+urllib3 = "*"
 
 [dev-packages]
 
