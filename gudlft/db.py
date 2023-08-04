@@ -44,6 +44,10 @@ class DataLoader:
         return message
 
 
+class BookingException(Exception):
+    pass
+
+
 class Club:
     def __init__(self, name, email, points):
         self.name = name
@@ -55,6 +59,17 @@ class Club:
 
     def __eq__(self, __value: object) -> bool:
         return self.name == __value.name
+
+    def book(self, competition, nb_of_places):
+        if nb_of_places > self.points:
+            raise BookingException('Your club have not enough points')
+        if nb_of_places > competition.number_of_places:
+            raise BookingException(
+                'The competition have not enough places available'
+                )
+        else:
+            competition.number_of_places -= nb_of_places
+            self.points -= nb_of_places
 
 
 class Competition:

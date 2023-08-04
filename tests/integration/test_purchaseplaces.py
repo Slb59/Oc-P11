@@ -32,8 +32,11 @@ class TestPurchasePlaces:
         )
         # print(server.data)
         assert result.status_code == 200
-        assert int(server.data.competitions[0].number_of_places) == \
+        assert server.data.competitions[0].number_of_places == \
             competition_places_before - places_booked
-        assert int(server.data.clubs[0].points) == \
+        assert server.data.clubs[0].points == \
             club_points_before - places_booked
-        assert int(server.data.clubs[0].points) >= 0
+        assert server.data.clubs[0].points >= 0
+
+    def test_not_enough_club_points(self):
+        ...

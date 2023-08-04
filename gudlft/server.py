@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-from .db import DataLoader
+from .db import DataLoader, BookingException
 
 app = Flask(__name__)
 # app.config.from_object(config)
@@ -64,21 +64,20 @@ def purchasePlaces():
     club = [c for c in data.clubs if c.name == request.form['club']][0]
     placesRequired = int(request.form['places'])
 
-    if placesRequired > club.points:
-        flash('Not enough points!')
-        return render_template(
-            'booking.html', club=club, competition=competition
-            )
-    else:
-        competition.number_of_places = \
-            int(competition.number_of_places) - placesRequired
-        club.points = club.points - placesRequired
+    try:
+        club.book(competition, placesRequired)
         flash('Great-booking complete!')
         return render_template(
             'welcome.html',
             club=club,
             competitions=data.competitions
             )
+    except BookingException as e_info:
+        flash(str(e_info))
+        return render_template(
+            'booking.html', club=club, competition=competition
+            )
+
 
 # TODO: Add route for points display
 
