@@ -2,4 +2,5 @@
 pipenv shell
 export FLASK_APP=gudlft/server.py
 export FLASK_DEBUG=1
+# export PYTHONPATH="projectpath"
 flask run
