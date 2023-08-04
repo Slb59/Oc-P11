@@ -28,7 +28,7 @@ class TestLoginLogout:
         assert "<form action=\"showSummary\" method=\"post\">" in data
 
     def test_post_login_OK(self):
-        first_email_in_db = server.data.clubs[0]["email"]
+        first_email_in_db = server.data.clubs[0].email
         # print(first_email_in_db)
         response = self.client.post(
             '/showSummary',

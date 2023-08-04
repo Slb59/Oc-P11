@@ -20,7 +20,7 @@ def showSummary():
     try:
         club = [
             club for club in data.clubs
-            if club['email'] == request.form['email']
+            if club.email == request.form['email']
             ][0]
         return render_template(
                 'welcome.html',
@@ -36,9 +36,9 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in data.clubs if c['name'] == club][0]
+    foundClub = [c for c in data.clubs if c.name == club][0]
     foundCompetition = [
-        c for c in data.competitions if c['name'] == competition
+        c for c in data.competitions if c.name == competition
         ][0]
     if foundClub and foundCompetition:
         return render_template(
@@ -59,20 +59,20 @@ def book(competition, club):
 def purchasePlaces():
     competition = [
         c for c in data.competitions
-        if c['name'] == request.form['competition']
+        if c.name == request.form['competition']
         ][0]
-    club = [c for c in data.clubs if c['name'] == request.form['club']][0]
+    club = [c for c in data.clubs if c.name == request.form['club']][0]
     placesRequired = int(request.form['places'])
 
-    if placesRequired > int(club['points']):
+    if placesRequired > club.points:
         flash('Not enough points!')
         return render_template(
             'booking.html', club=club, competition=competition
             )
     else:
-        competition['numberOfPlaces'] = \
-            int(competition['numberOfPlaces']) - placesRequired
-        club['points'] = int(club['points']) - placesRequired
+        competition.number_of_places = \
+            int(competition.number_of_places) - placesRequired
+        club.points = club.points - placesRequired
         flash('Great-booking complete!')
         return render_template(
             'welcome.html',

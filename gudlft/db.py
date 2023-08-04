@@ -22,7 +22,8 @@ class DataLoader:
 
         with open(filename) as c:
             listOfClubs = json.load(c)['clubs']
-            return listOfClubs
+            clubs = [Club(**club) for club in listOfClubs]
+            return clubs
 
     def _loadCompetitions(self):
 
@@ -30,7 +31,8 @@ class DataLoader:
 
         with open(filename) as comps:
             listOfCompetitions = json.load(comps)['competitions']
-            return listOfCompetitions
+            competitions = [Competition(**comp) for comp in listOfCompetitions]
+            return competitions
 
     def __str__(self):
         message = "\nClubs: \n"
@@ -43,18 +45,26 @@ class DataLoader:
 
 
 class Club:
-    def __init__(self, **kwargs):
-        for kwarg in kwargs:
-            setattr(self, kwarg, kwargs[kwarg])
+    def __init__(self, name, email, points):
+        self.name = name
+        self.email = email
+        self.points = int(points)
 
     def __str__(self) -> str:
         return f"<Club - {self.name}>"
 
+    def __eq__(self, __value: object) -> bool:
+        return self.name == __value.name
+
 
 class Competition:
-    def __init__(self, **kwargs):
-        for kwarg in kwargs:
-            setattr(self, kwarg, kwargs[kwarg])
+    def __init__(self, name, date, numberOfPlaces=0):
+        self.name = name
+        self.date = date
+        self.number_of_places = int(numberOfPlaces)
 
     def __str__(self) -> str:
         return f"<Competition - {self.name}>"
+
+    def __eq__(self, __value: object) -> bool:
+        return self.name == __value.name and self.date == __value.date

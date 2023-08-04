@@ -17,23 +17,23 @@ class TestPurchasePlaces:
 
     def test_deduct_points_ok(self):
         # print(server.data)
-        club_points_before = int(server.data.clubs[0]["points"])
+        club_points_before = server.data.clubs[0].points
         competition_places_before =\
-            int(server.data.competitions[0]["numberOfPlaces"])
+            server.data.competitions[0].number_of_places
         places_booked = 5
 
         result = self.client.post(
             "/purchasePlaces",
             data={
                 "places": places_booked,
-                "club": server.data.clubs[0]["name"],
-                "competition": server.data.competitions[0]["name"]
+                "club": server.data.clubs[0].name,
+                "competition": server.data.competitions[0].name
             }
         )
         # print(server.data)
         assert result.status_code == 200
-        assert int(server.data.competitions[0]["numberOfPlaces"]) == \
+        assert int(server.data.competitions[0].number_of_places) == \
             competition_places_before - places_booked
-        assert int(server.data.clubs[0]["points"]) == \
+        assert int(server.data.clubs[0].points) == \
             club_points_before - places_booked
-        assert int(server.data.clubs[0]["points"]) >= 0
+        assert int(server.data.clubs[0].points) >= 0
