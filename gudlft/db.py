@@ -53,6 +53,7 @@ class Club:
         self.name = name
         self.email = email
         self.points = int(points)
+        self.orders = []
 
     def __str__(self) -> str:
         return f"<Club - {self.name}>"
@@ -60,16 +61,30 @@ class Club:
     def __eq__(self, __value: object) -> bool:
         return self.name == __value.name
 
+    def already_booked(self, competition) -> int:
+        """ give the number of places already booked for a competition """
+        total = 0
+        for order in self.orders:
+            if order.competition == competition:
+                total += order.nb_of_places
+        return total
+
     def book(self, competition, nb_of_places):
         if nb_of_places > self.points:
             raise BookingException('Your club have not enough points')
-        if nb_of_places > competition.number_of_places:
+        
+        elif nb_of_places > competition.number_of_places:
             raise BookingException(
                 'The competition have not enough places available'
+                )
+        elif self.already_booked(competition) + nb_of_places > 12:
+            raise BookingException(
+                'You cannot purchase more than 12 places for a competition'
                 )
         else:
             competition.number_of_places -= nb_of_places
             self.points -= nb_of_places
+            self.orders.append(Order(self, competition, nb_of_places))
 
 
 class Competition:
@@ -83,3 +98,16 @@ class Competition:
 
     def __eq__(self, __value: object) -> bool:
         return self.name == __value.name and self.date == __value.date
+
+
+class Order:
+    def __init__(self, club: Club, competition: Competition, nb_of_places):
+        self.club = club
+        self.competition = competition
+        self.nb_of_places = int(nb_of_places)
+
+    def __str__(self) -> str:
+        order_string = f'[{self.club.name} - {self.competition.name} '
+        order_string += f': {self.nb_of_places}]'
+        return order_string
+    
