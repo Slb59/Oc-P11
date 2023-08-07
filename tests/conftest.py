@@ -1,59 +1,51 @@
 import pytest
 
-# from gudlft.server import create_app
+from gudlft.server import app
+from gudlft.db import Club, Competition
 
 
-# @pytest.fixture
-# def client():
+@pytest.fixture
+def client():
 
-#     # app = create_app({"TESTING": True})
+    # app = create_app({"TESTING": True})
 
-#     with app.test_client() as client:
-#         yield client
+    with app.test_client() as client:
+        yield client
 
 
 @pytest.fixture
 def clubtest():
-    club1 = {
+    club_dict = {
         "name": "Club to test",
         "email": "club@example.com",
         "points": "5"
     }
-    return club1
+    return Club(**club_dict)
 
 
 @pytest.fixture
-def clubs_data():
-    return [
-        {
-            "name": "Simply Lift",
-            "email": "john@simplylift.co",
+def test_clubs_data():
+    club_dict = {
+            "name": "club for test",
+            "email": "club@exemple.com",
             "points": "13"
-        },
-        {
-            "name": "Iron Temple",
-            "email": "admin@irontemple.com",
-            "points": "4"
-        },
-        {
-            "name": "She Lifts",
-            "email": "kate@shelifts.co.uk",
-            "points": "12"
         }
-    ]
+    return [Club(**club_dict)]
 
 
 @pytest.fixture
-def competitions_data():
-    return [
-        {
+def test_competitions_data():
+    competition1_dict = {
             "name": "Spring Festival",
             "date": "2020-03-27 10:00:00",
             "numberOfPlaces": "25"
-        },
-        {
+        }
+    competition2_dict = {
             "name": "Fall Classic",
             "date": "2020-10-22 13:30:00",
             "numberOfPlaces": "13"
         }
+    return [ 
+        Competition(**competition1_dict),
+        Competition(**competition2_dict)
     ]

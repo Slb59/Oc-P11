@@ -17,6 +17,10 @@ locust = "*"
 flake8 = "*"
 django = "*"
 pytest-mock = "*"
+selenium = "*"
+webdriver-manager = "*"
+urllib3 = "*"
+questionary = "*"
 
 [dev-packages]
 
