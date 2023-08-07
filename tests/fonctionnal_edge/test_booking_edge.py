@@ -22,6 +22,7 @@ class TestStories:
         options = Options()
         options.use_chromium = True
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        options.add_argument('--headless')
         service = Service(
             executable_path="tests/fonctionnal_edge/msedgedriver.exe"
             )
