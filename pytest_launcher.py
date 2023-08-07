@@ -1,12 +1,6 @@
-import sys
-
-import pytest
-
-
-class MyPlugin:
-    def pytest_sessionfinish(self):
-        print("*** test run reporting finishing")
+from utils.menutests_manager.menutests_controller import MenuTestManager
 
 
 if __name__ == "__main__":
-    sys.exit(pytest.main(["-qq"], plugins=[MyPlugin()]))
+    app = MenuTestManager()
+    app.run()
