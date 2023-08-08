@@ -92,5 +92,6 @@ class TestPurchasePlaces:
             }
         )
         data = result.data.decode()
+        print(data)
         assert "You cannot purchase more than 12 places for a competition"\
             in data

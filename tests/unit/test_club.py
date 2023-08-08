@@ -1,5 +1,9 @@
 import pytest
-from gudlft.db import DataLoader, BookingException, Club, Competition, Order
+from gudlft.db import (
+    NotEnoughtPointsError, NotEnoughtPlacesError,
+    MaxPlacesPerCompetitionError,
+    DataLoader, Club, Competition, Order
+)
 
 
 class TestClub:
@@ -14,20 +18,18 @@ class TestClub:
         self.data.clubs[0].book(self.data.competitions[0], 10)
         assert self.data.clubs[0].points == 3
         assert self.data.competitions[0].number_of_places == 15
-        with pytest.raises(BookingException) as e_info:
+        with pytest.raises(Exception) as e_info:
             self.data.clubs[0].book(self.data.competitions[0], 10)
-        assert "Your club have not enough points" in str(e_info.value)
+        assert e_info.type is NotEnoughtPointsError
         self.data.clubs[0].points = 20
         self.data.competitions[0].number_of_places = 5
-        with pytest.raises(BookingException) as e_info:
+        with pytest.raises(Exception) as e_info:
             self.data.clubs[0].book(self.data.competitions[0], 12)
-        assert "The competition have not enough places available" \
-            in str(e_info.value)
+        assert e_info.type is NotEnoughtPlacesError
         self.data.competitions[0].number_of_places = 20
-        with pytest.raises(BookingException) as e_info:
+        with pytest.raises(Exception) as e_info:
             self.data.clubs[0].book(self.data.competitions[0], 15)
-        assert "You cannot purchase more than 12 places for a competition" \
-            in str(e_info.value)
+        assert e_info.type is MaxPlacesPerCompetitionError
 
     def test_init(self):
         new_club = Club('nouveau club', 'club@example.com', 10)

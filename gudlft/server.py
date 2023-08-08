@@ -4,7 +4,7 @@ from distutils.util import strtobool
 
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-from .db import DataLoader, BookingException
+from .db import DataLoader
 
 # from dotenv import load_dotenv
 
@@ -96,7 +96,7 @@ def purchasePlaces():
             club=club,
             competitions=data.competitions
             )
-    except BookingException as e_info:
+    except Exception as e_info:
         flash(str(e_info))
         return render_template(
             'booking.html', club=club, competition=competition

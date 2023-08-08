@@ -44,11 +44,44 @@ class DataLoader:
         return message
 
 
-class BookingException(Exception):
-    pass
+class NotEnoughtPointsError(Exception):
+    def __init__(self, points, message="Your club have not enough points"):
+        self.points = points
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self) -> str:
+        return self.message
+
+
+class NotEnoughtPlacesError(Exception):
+    def __init__(
+            self, places,
+            message="The competition have not enough places available"
+            ):
+        self.places = places
+        self.message = message
+        super().__init__(self.message)
+
+
+class MaxPlacesPerCompetitionError(Exception):
+    def __init__(
+            self, maxvalue,
+            message="Max places per competition reached"
+            ):
+        self.maxvalue = maxvalue
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self) -> str:
+        return 'You cannot purchase more than '\
+            + str(self.maxvalue) + ' places for a competition'
 
 
 class Club:
+
+    MAX_BOOK_PLACES_PER_COMPETITION = 12
+
     def __init__(self, name, email, points):
         self.name = name
         self.email = email
@@ -71,16 +104,16 @@ class Club:
 
     def book(self, competition, nb_of_places):
         if nb_of_places > self.points:
-            raise BookingException('Your club have not enough points')
+            raise NotEnoughtPointsError(self.points)
         
         elif nb_of_places > competition.number_of_places:
-            raise BookingException(
-                'The competition have not enough places available'
-                )
-        elif self.already_booked(competition) + nb_of_places > 12:
-            raise BookingException(
-                'You cannot purchase more than 12 places for a competition'
-                )
+            raise NotEnoughtPlacesError(competition.number_of_places)
+        
+        elif self.already_booked(competition) + nb_of_places\
+                > self.MAX_BOOK_PLACES_PER_COMPETITION:
+            raise MaxPlacesPerCompetitionError(
+                self.MAX_BOOK_PLACES_PER_COMPETITION)
+        
         else:
             competition.number_of_places -= nb_of_places
             self.points -= nb_of_places
