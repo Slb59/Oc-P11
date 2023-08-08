@@ -1,13 +1,35 @@
+import os
+
+from distutils.util import strtobool
+
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 from .db import DataLoader, BookingException
+
+# from dotenv import load_dotenv
+
+# load_dotenv()
+# DEBUG = strtobool(os.getenv("DEBUG", "false"))
+os.environ['TESTING'] = 'False'
+TESTING = strtobool(os.getenv('TESTING'))
 
 app = Flask(__name__)
 # app.config.from_object(config)
 app.secret_key = 'something_special'
 
+
+print(TESTING)
+
 # load data
-data = DataLoader()
+if TESTING:
+    print('load mode testing')
+    data = DataLoader(
+        club_file='test2_clubs.json',
+        competition_file='test2_competitions.json'
+        )
+else:
+    print('load dev')
+    data = DataLoader()
 
 
 @app.route('/')

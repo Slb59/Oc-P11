@@ -21,6 +21,7 @@ selenium = "*"
 webdriver-manager = "*"
 urllib3 = "*"
 questionary = "*"
+environ = "*"
 
 [dev-packages]
 

@@ -1,4 +1,5 @@
 import gudlft.server as server
+import os
 
 from http import HTTPStatus
 from gudlft.server import app
@@ -8,14 +9,15 @@ from gudlft.db import DataLoader
 class TestPurchasePlaces:
 
     # load the test database
-    data = DataLoader(
-        club_file='test2_clubs.json',
-        competition_file='test2_competitions.json'
-    )
+    # data = DataLoader(
+    #     club_file='test2_clubs.json',
+    #     competition_file='test2_competitions.json'
+    # )
 
-    def setup_method(self):
+    def setup_method(self):        
         self.client = app.test_client()
-        server.data = self.data
+        os.environ['TESTING'] = 'True'
+        # server.data = self.data
 
     def test_deduct_points_ok(self):
         # print(server.data)

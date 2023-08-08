@@ -114,7 +114,7 @@ class TestStories:
         field_places.submit()
         assert "You cannot book more than 12 places"\
             in self.driver.page_source
-        # try to book 10 + 10 places 
+        # try to book 10 + 10 places
         field_places = self.driver.find_element(By.ID, "number_of_places")
         field_places.send_keys("10")
         time.sleep(2)
