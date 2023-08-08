@@ -18,13 +18,17 @@ class TestClub:
             self.data.clubs[0].book(self.data.competitions[0], 10)
         assert "Your club have not enough points" in str(e_info.value)
         self.data.clubs[0].points = 20
+        self.data.competitions[0].number_of_places = 5
         with pytest.raises(BookingException) as e_info:
-            self.data.clubs[0].book(self.data.competitions[0], 17)
+            self.data.clubs[0].book(self.data.competitions[0], 12)
         assert "The competition have not enough places available" \
             in str(e_info.value)
-        # todo : add test for 12 places limite
-        assert False
-    
+        self.data.competitions[0].number_of_places = 20
+        with pytest.raises(BookingException) as e_info:
+            self.data.clubs[0].book(self.data.competitions[0], 15)
+        assert "You cannot purchase more than 12 places for a competition" \
+            in str(e_info.value)
+
     def test_init(self):
         new_club = Club('nouveau club', 'club@example.com', 10)
         assert str(new_club) == '<Club - nouveau club>'
@@ -42,4 +46,3 @@ class TestClub:
         new_club.orders.append(Order(new_club, new_competition2, 20))
         assert new_club.already_booked(new_competition1) == 15
         assert new_club.already_booked(new_competition2) == 20
-

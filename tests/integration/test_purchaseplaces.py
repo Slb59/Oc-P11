@@ -3,18 +3,11 @@ import os
 
 from http import HTTPStatus
 from gudlft.server import app
-from gudlft.db import DataLoader
 
 
 class TestPurchasePlaces:
 
-    # load the test database
-    # data = DataLoader(
-    #     club_file='test2_clubs.json',
-    #     competition_file='test2_competitions.json'
-    # )
-
-    def setup_method(self):        
+    def setup_method(self):
         self.client = app.test_client()
         os.environ['TESTING'] = 'True'
         # server.data = self.data
@@ -84,6 +77,20 @@ class TestPurchasePlaces:
         assert server.data.clubs[0].points == \
             club_points_before
         data = result.data.decode()
-        print(data)
         assert "<li>The competition have not enough places available</li>"\
+            in data
+
+    def test_purchase_more_than_12_places(self):
+        server.data.clubs[0].points = 100
+        places_booked = 15
+        result = self.client.post(
+            "/purchasePlaces",
+            data={
+                "places": places_booked,
+                "club": server.data.clubs[0].name,
+                "competition": server.data.competitions[0].name
+            }
+        )
+        data = result.data.decode()
+        assert "You cannot purchase more than 12 places for a competition"\
             in data

@@ -9,10 +9,11 @@ from .db import DataLoader, BookingException
 # from dotenv import load_dotenv
 
 # load_dotenv()
-# DEBUG = strtobool(os.getenv("DEBUG", "false"))
+
 os.environ['TESTING'] = 'False'
 TESTING = strtobool(os.getenv('TESTING'))
 
+# start flask app
 app = Flask(__name__)
 # app.config.from_object(config)
 app.secret_key = 'something_special'
@@ -32,6 +33,7 @@ else:
     data = DataLoader()
 
 
+# define routes
 @app.route('/')
 def index():
     return render_template('index.html')

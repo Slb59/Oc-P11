@@ -29,11 +29,12 @@ class MenuTestManager:
             elif answer == menuview.main_menu_choices()[0]:
                 # exit_code = pytest.main(["-qq"], plugins=[MyPlugin()])
                 args = ['tests/unit']
-                pytest.main(args)     
+                pytest.main(args)
 
             elif answer == menuview.main_menu_choices()[1]:
                 args = ['tests/integration']
-                pytest.main(args)
+                args.append('-s')
+                pytest.main(list(args))
 
             elif answer == menuview.main_menu_choices()[2]:
                 os.environ['TESTING'] = 'True'

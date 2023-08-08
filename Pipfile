@@ -22,6 +22,7 @@ webdriver-manager = "*"
 urllib3 = "*"
 questionary = "*"
 environ = "*"
+ipython = "*"
 
 [dev-packages]
 
