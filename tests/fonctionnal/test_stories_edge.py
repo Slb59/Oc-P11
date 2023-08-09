@@ -1,22 +1,18 @@
-import time
+import time, os
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
-
-# import gudlft.server as server
-# from gudlft.db import DataLoader
 
 
 class TestStories:
 
     def setup_method(self):
 
-        # load test data
-        # server.data = DataLoader(
-        #     club_file='test2_clubs.json',
-        #     competition_file='test2_competitions.json'
-        # )
+        # read and set env settings
+        HEADLESS = os.getenv('HEADLESS')
+        
+        print(HEADLESS)
 
         # start webdriver
         options = Options()

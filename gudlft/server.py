@@ -6,11 +6,10 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 
 from .db import DataLoader
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
-os.environ['TESTING'] = 'False'
 TESTING = strtobool(os.getenv('TESTING'))
 
 # start flask app
@@ -18,8 +17,6 @@ app = Flask(__name__)
 # app.config.from_object(config)
 app.secret_key = 'something_special'
 
-
-print(TESTING)
 
 # load data
 if TESTING:

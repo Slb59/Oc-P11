@@ -29,16 +29,18 @@ class MenuTestManager:
             elif answer == menuview.main_menu_choices()[0]:
                 # exit_code = pytest.main(["-qq"], plugins=[MyPlugin()])
                 args = ['tests/unit']
+                args.append('-s')
                 pytest.main(args)
 
             elif answer == menuview.main_menu_choices()[1]:
                 args = ['tests/integration']
                 args.append('-s')
+                args.append('-v')
                 pytest.main(list(args))
 
             elif answer == menuview.main_menu_choices()[2]:
                 os.environ['TESTING'] = 'True'
-                args = ['tests/fonctionnal_edge']
+                args = ['tests/fonctionnal']
                 pytest.main(args)
 
             elif answer == menuview.main_menu_choices()[3]:

@@ -45,7 +45,7 @@ class DataLoader:
 
 
 class NotEnoughtPointsError(Exception):
-    def __init__(self, points, message="Your club have not enough points"):
+    def __init__(self, points, message="Your club doesn't have enough points"):
         self.points = points
         self.message = message
         super().__init__(self.message)
@@ -57,7 +57,7 @@ class NotEnoughtPointsError(Exception):
 class NotEnoughtPlacesError(Exception):
     def __init__(
             self, places,
-            message="The competition have not enough places available"
+            message="The competition doesn't have enough places available"
             ):
         self.places = places
         self.message = message
@@ -102,22 +102,49 @@ class Club:
                 total += order.nb_of_places
         return total
 
-    def book(self, competition, nb_of_places):
-        if nb_of_places > self.points:
-            raise NotEnoughtPointsError(self.points)
+    def book(self, competition, nb_of_places) -> None:
+        """
+        book a nb_of_places for a competion :
+        decrease the points of the club and the places
+        avalaible for a competition and save the order information
+        :param competition: must be a competition instance
+        :param nb_of_places: number of places to book
+        :raise NotEnoughtPointsError: if club doesn't have enought points
+        :raise NotEnoughtPlacesError: if competition places available
+        are < nb_of_places
+        :raise MaxPlacesPerCompetitionError if nb_of_places > 12
+        (MAX_BOOK_PLACES_PER_COMPETITION)
+        """
+        match nb_of_places:
+            case _ as value if value > self.points:
+                raise NotEnoughtPointsError(self.points)
+            case _ as value if value > competition.number_of_places:
+                raise NotEnoughtPlacesError(competition.number_of_places)
+            case _ as value if self.already_booked(competition) + value\
+                    > self.MAX_BOOK_PLACES_PER_COMPETITION:
+                raise MaxPlacesPerCompetitionError(
+                    self.MAX_BOOK_PLACES_PER_COMPETITION)
+            case _ as value:
+                competition.number_of_places -= nb_of_places
+                self.points -= nb_of_places
+                self.orders.append(Order(self, competition, nb_of_places))
+
+    # def book_old(self, competition, nb_of_places):
+    #     if nb_of_places > self.points:
+    #         raise NotEnoughtPointsError(self.points)
         
-        elif nb_of_places > competition.number_of_places:
-            raise NotEnoughtPlacesError(competition.number_of_places)
+    #     elif nb_of_places > competition.number_of_places:
+    #         raise NotEnoughtPlacesError(competition.number_of_places)
         
-        elif self.already_booked(competition) + nb_of_places\
-                > self.MAX_BOOK_PLACES_PER_COMPETITION:
-            raise MaxPlacesPerCompetitionError(
-                self.MAX_BOOK_PLACES_PER_COMPETITION)
+    #     elif self.already_booked(competition) + nb_of_places\
+    #             > self.MAX_BOOK_PLACES_PER_COMPETITION:
+    #         raise MaxPlacesPerCompetitionError(
+    #             self.MAX_BOOK_PLACES_PER_COMPETITION)
         
-        else:
-            competition.number_of_places -= nb_of_places
-            self.points -= nb_of_places
-            self.orders.append(Order(self, competition, nb_of_places))
+    #     else:
+    #         competition.number_of_places -= nb_of_places
+    #         self.points -= nb_of_places
+    #         self.orders.append(Order(self, competition, nb_of_places))
 
 
 class Competition:

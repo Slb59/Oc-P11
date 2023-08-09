@@ -2,6 +2,9 @@ from gudlft.db import Club, Competition, Order
 
 
 class TestOrder:
+    """
+    Test Order instance behaviour
+    """
 
     def test_init(self):
         new_competition = Competition(
