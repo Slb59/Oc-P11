@@ -1,40 +1,46 @@
 import time, os
+import pytest
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
 
 
+@pytest.mark.usefixtures("driver_edge_init")
 class TestStories:
 
-    def setup_method(self):
+    # def setup_method(self):
 
-        # read and set env settings
-        HEADLESS = os.getenv('HEADLESS')
+    #     # read and set env settings
+    #     HEADLESS = os.getenv('HEADLESS')
         
-        print(HEADLESS)
+    #     print(HEADLESS)
 
-        # start webdriver
-        options = Options()
-        options.use_chromium = True
-        options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        options.add_argument('--headless')
-        service = Service(
-            executable_path="tests/fonctionnal_edge/msedgedriver.exe"
-            )
-        self.driver = webdriver.Edge(
-            service=service,
-            options=options,
-            )
-        self.driver.get("http://127.0.0.1:5000/")
-        self.driver.minimize_window()
-        self.driver.maximize_window()
-        time.sleep(3)
+    #     # start webdriver
+    #     options = Options()
+    #     options.use_chromium = True
+    #     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    #     options.add_argument('--headless')
+    #     service = Service(
+    #         executable_path="tests/fonctionnal_edge/msedgedriver.exe"
+    #         )
+    #     self.driver = webdriver.Edge(
+    #         service=service,
+    #         options=options,
+    #         )
+    #     self.driver.get("http://127.0.0.1:5000/")
+    #     self.driver.minimize_window()
+    #     self.driver.maximize_window()
+    #     time.sleep(3)
 
-    def teardown_method(self):
-        self.driver.quit()
+    # def teardown_method(self):
+    #     self.driver.quit()
 
     def test_story1_login_scenario1(self):
+        """
+        when: I enter my email and click "enter"
+        then: the system show the summary page
+        """
         field_email = self.driver.find_element(By.ID, "email_field")
         field_email.send_keys("john@simplylift.co")
         time.sleep(2)
@@ -43,6 +49,11 @@ class TestStories:
         assert "Welcome, john@simplylift.co" in self.driver.page_source
 
     def test_story2_login_scanario2(self):
+        """
+        when: I indicate an email not recognized in the club database and that
+        I click on "Enter"
+        then: the system tells me a message "Sorry, that email wasn't found."
+        """
         field_email = self.driver.find_element(By.ID, "email_field")
         field_email.send_keys("unlonown@example.com")
         time.sleep(2)
@@ -52,12 +63,24 @@ class TestStories:
             in self.driver.page_source
 
     def test_story3_logout_from_summary(self):
+        """
+        when: I am logged in and in the summary page and that
+        I click on "logout" button
+        then:  the system directs me to the home page
+        and I am disconnected from the system.
+        """
         self.test_story1_login_scenario1()
         field_logout = self.driver.find_element(By.CLASS_NAME, "logout_link")
         field_logout.click()
         assert self.driver.current_url == 'http://127.0.0.1:5000/'
 
     def test_story3_logout_from_book(self):
+        """
+        when: I am logged in and in the book page and that
+        I click on "logout" button
+        then:  the system directs me to the home page
+        and I am disconnected from the system.
+        """
         self.test_story1_login_scenario1()
         field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
         field_book.click()
@@ -67,6 +90,13 @@ class TestStories:
         assert self.driver.current_url == 'http://127.0.0.1:5000/'
 
     def test_story4_showsummary(self):
+        """
+        when: Since I am logged in and I am on The "summary" page
+        then: I can view the balance of my current points and
+        the list of competitions ordered by decrease date
+        """
+        self.test_story1_login_scenario1()
+        assert "Points available: 13" in self.driver.page_source
         assert False
 
     def test_story5_bookinfo(self):
