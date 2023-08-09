@@ -1,4 +1,5 @@
-import sys
+# import sys
+import os
 import pytest
 
 from .menutests_view import MenuTestView
@@ -28,16 +29,20 @@ class MenuTestManager:
             elif answer == menuview.main_menu_choices()[0]:
                 # exit_code = pytest.main(["-qq"], plugins=[MyPlugin()])
                 args = ['tests/unit']
-                pytest.main(args)                 
+                args.append('-s')
+                pytest.main(args)
 
             elif answer == menuview.main_menu_choices()[1]:
                 args = ['tests/integration']
-                pytest.main(args)                
+                args.append('-s')
+                args.append('-v')
+                pytest.main(list(args))
 
             elif answer == menuview.main_menu_choices()[2]:
-                args = ['tests/fonctionnal_edge']
+                os.environ['TESTING'] = 'True'
+                args = ['tests/fonctionnal']
                 pytest.main(args)
 
             elif answer == menuview.main_menu_choices()[3]:
                 args = ['--cov=gudlft --cov-report html']
-                pytest.main(args)    
+                pytest.main(args)

@@ -1,22 +1,18 @@
-import time
+import time, os
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.common.by import By
-
-# import gudlft.server as server
-# from gudlft.db import DataLoader
 
 
 class TestStories:
 
     def setup_method(self):
 
-        # load test data
-        # server.data = DataLoader(
-        #     club_file='test2_clubs.json',
-        #     competition_file='test2_competitions.json'
-        # )
+        # read and set env settings
+        HEADLESS = os.getenv('HEADLESS')
+        
+        print(HEADLESS)
 
         # start webdriver
         options = Options()
@@ -77,9 +73,18 @@ class TestStories:
         assert False
 
     def test_story6_booking_ok(self):
-        assert False
+        self.test_story1_login_scenario1()
+        field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
+        field_book.click()
+        field_places = self.driver.find_element(By.ID, "number_of_places")
+        field_places.send_keys("10")
+        time.sleep(2)
+        field_places.submit()
+        assert "Great-booking complete!" in self.driver.page_source
 
     def test_story7_booking_more_available(self):
+        # TODO : need to load a test database for assert more than
+        # number of places in competition after more 12 test
         self.test_story1_login_scenario1()
         field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
         field_book.click()
@@ -91,4 +96,31 @@ class TestStories:
             in self.driver.page_source
         time.sleep(2)     
         assert False
+        # TODO : need to load a test database for assert more than
+        # number of places in competition
+
+    def test_story7_booking_more_12(self):
+        self.test_story1_login_scenario1()
+        # try to book 20 places
+        field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
+        field_book.click()
+        field_places = self.driver.find_element(By.ID, "number_of_places")
+        field_places.send_keys("20")
+        time.sleep(2)
+        field_places.submit()
+        assert "You cannot book more than 12 places"\
+            in self.driver.page_source
+        # try to book 10 + 10 places
+        field_places = self.driver.find_element(By.ID, "number_of_places")
+        field_places.send_keys("10")
+        time.sleep(2)
+        field_places.submit()
+        field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
+        field_book.click()
+        field_places = self.driver.find_element(By.ID, "number_of_places")
+        field_places.send_keys("10")
+        time.sleep(2)
+        field_places.submit()
+        assert "You cannot book more than 12 places"\
+            in self.driver.page_source
 

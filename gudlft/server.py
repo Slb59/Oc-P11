@@ -1,15 +1,36 @@
+import os
+
+from distutils.util import strtobool
+
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-from .db import DataLoader, BookingException
+from .db import DataLoader
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+TESTING = strtobool(os.getenv('TESTING'))
+
+# start flask app
 app = Flask(__name__)
 # app.config.from_object(config)
 app.secret_key = 'something_special'
 
+
 # load data
-data = DataLoader()
+if TESTING:
+    print('load mode testing')
+    data = DataLoader(
+        club_file='test2_clubs.json',
+        competition_file='test2_competitions.json'
+        )
+else:
+    print('load dev')
+    data = DataLoader()
 
 
+# define routes
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -72,7 +93,7 @@ def purchasePlaces():
             club=club,
             competitions=data.competitions
             )
-    except BookingException as e_info:
+    except Exception as e_info:
         flash(str(e_info))
         return render_template(
             'booking.html', club=club, competition=competition

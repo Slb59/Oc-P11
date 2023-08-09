@@ -45,7 +45,7 @@ def test_competitions_data():
             "date": "2020-10-22 13:30:00",
             "numberOfPlaces": "13"
         }
-    return [ 
+    return [
         Competition(**competition1_dict),
         Competition(**competition2_dict)
     ]
