@@ -35,8 +35,6 @@ class TestLoginLogout:
             data={'email': first_email_in_db}
         )
         assert response.status_code == HTTPStatus.OK
-        # data = response.data.decode()
-        # print(data)
         assert first_email_in_db in response.get_data(as_text=True)
 
     def test_post_login_KO(self):

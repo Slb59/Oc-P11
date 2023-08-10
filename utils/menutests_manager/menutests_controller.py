@@ -25,7 +25,7 @@ class MenuTestManager:
             index = choice.index(answer)
 
             match index:
-               
+
                 case 5:
                     running = False
 
@@ -37,7 +37,7 @@ class MenuTestManager:
 
                 case 1:
                     args = ['tests/integration']
-                    args.append('-s')
+                    # args.append('-s')
                     args.append('-v')
                     pytest.main(list(args))
 
@@ -47,5 +47,5 @@ class MenuTestManager:
                     pytest.main(args)
 
                 case 3:
-                        args = ['--cov=gudlft --cov-report html']
-                        pytest.main(args)
+                    args = ['--cov=gudlft --cov-report html']
+                    pytest.main(args)

@@ -4,7 +4,10 @@ from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 
+from freezegun import freeze_time
+
 from gudlft.server import app
+from gudlft.models.dataloader import DataLoader
 from gudlft.models.db import Club, Competition
 
 
@@ -37,6 +40,15 @@ def driver_edge_init(request):
     yield
 
     edge_driver.quit()
+
+
+@pytest.fixture
+@freeze_time("2023-08-01 00:00:00")
+def mock_test_data():
+    return DataLoader(
+            club_file='test_clubs.json',
+            competition_file='test_competitions.json'
+        )
 
 
 @pytest.fixture

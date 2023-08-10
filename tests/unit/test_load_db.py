@@ -12,7 +12,7 @@ class TestLoadDb:
     club and competition attribut are dictionnary tha contains
     the json data
     """
-    
+
     def setup_method(self):
         """Given: test_clubs.json and test_competitions.json
         files

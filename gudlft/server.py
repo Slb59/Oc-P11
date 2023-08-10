@@ -36,7 +36,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/showSummary', methods=['POST'])
+@app.route('/showSummary', methods=['POST', 'GET'])
 def showSummary():
     try:
         club = [
@@ -46,7 +46,8 @@ def showSummary():
         return render_template(
                 'welcome.html',
                 club=club,
-                competitions=data.competitions
+                future_competitions=data.future_competitions,
+                past_competitions=data.past_competitions
                 )
     except IndexError:
         flash("!!! Cette adresse email n'est pas reconnue")
