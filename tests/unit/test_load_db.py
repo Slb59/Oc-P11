@@ -56,13 +56,13 @@ class TestLoadDb:
     def test_sort_competition(self):
         past_competitions = [
             Competition(
-                "Spring Festival",
-                "2020-03-27 10:00:00",
-                "25"),
-            Competition(
                 "Fall Classic",
                 "2020-10-22 13:30:00",
-                "13")
+                "13"),
+            Competition(
+                "Spring Festival",
+                "2020-03-27 10:00:00",
+                "25")         
         ]
         future_competitions = [
             Competition(
@@ -80,6 +80,7 @@ class TestLoadDb:
             )
         for c in self.data.past_competitions:
             print(c)
+        print('---')
         for c in self.data.future_competitions:
             print(c)
         assert self.data.past_competitions == past_competitions

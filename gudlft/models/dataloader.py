@@ -19,6 +19,10 @@ class DataLoader:
             self.competitions = self._loadCompetitions()
             self.past_competitions, self.future_competitions\
                 = self._sort_competitions()
+            self.past_competitions.sort(
+                key=lambda x: x.date, reverse=True)
+            self.future_competitions.sort(
+                key=lambda x: x.date, reverse=True)    
 
     def _loadClubs(self) -> list:
 

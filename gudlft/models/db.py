@@ -1,4 +1,3 @@
-# import os
 
 
 class NotEnoughtPointsError(Exception):
@@ -85,23 +84,6 @@ class Club:
                 competition.number_of_places -= nb_of_places
                 self.points -= nb_of_places
                 self.orders.append(Order(self, competition, nb_of_places))
-
-    # def book_old(self, competition, nb_of_places):
-    #     if nb_of_places > self.points:
-    #         raise NotEnoughtPointsError(self.points)
-        
-    #     elif nb_of_places > competition.number_of_places:
-    #         raise NotEnoughtPlacesError(competition.number_of_places)
-        
-    #     elif self.already_booked(competition) + nb_of_places\
-    #             > self.MAX_BOOK_PLACES_PER_COMPETITION:
-    #         raise MaxPlacesPerCompetitionError(
-    #             self.MAX_BOOK_PLACES_PER_COMPETITION)
-        
-    #     else:
-    #         competition.number_of_places -= nb_of_places
-    #         self.points -= nb_of_places
-    #         self.orders.append(Order(self, competition, nb_of_places))
 
 
 class Competition:
