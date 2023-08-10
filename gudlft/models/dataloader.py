@@ -17,7 +17,7 @@ class DataLoader:
         if self.club_file is not None and self.competition_file is not None:
             self.clubs = self._loadClubs()
             self.competitions = self._loadCompetitions()
-            self.past_competitions, self.future_competition/
+            self.past_competitions, self.future_competitions\
                 = self._sort_competitions()
 
     def _loadClubs(self) -> list:
