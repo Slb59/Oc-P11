@@ -1,4 +1,4 @@
-from gudlft.db import DataLoader
+from gudlft.models.dataloader import DataLoader
 
 
 class TestLoadDb:

@@ -1,40 +1,11 @@
-import time, os
+import time
 import pytest
-from selenium import webdriver
-from selenium.webdriver.edge.options import Options
-from selenium.webdriver.edge.service import Service
+
 from selenium.webdriver.common.by import By
 
 
 @pytest.mark.usefixtures("driver_edge_init")
 class TestStories:
-
-    # def setup_method(self):
-
-    #     # read and set env settings
-    #     HEADLESS = os.getenv('HEADLESS')
-        
-    #     print(HEADLESS)
-
-    #     # start webdriver
-    #     options = Options()
-    #     options.use_chromium = True
-    #     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    #     options.add_argument('--headless')
-    #     service = Service(
-    #         executable_path="tests/fonctionnal_edge/msedgedriver.exe"
-    #         )
-    #     self.driver = webdriver.Edge(
-    #         service=service,
-    #         options=options,
-    #         )
-    #     self.driver.get("http://127.0.0.1:5000/")
-    #     self.driver.minimize_window()
-    #     self.driver.maximize_window()
-    #     time.sleep(3)
-
-    # def teardown_method(self):
-    #     self.driver.quit()
 
     def test_story1_login_scenario1(self):
         """
@@ -42,11 +13,11 @@ class TestStories:
         then: the system show the summary page
         """
         field_email = self.driver.find_element(By.ID, "email_field")
-        field_email.send_keys("john@simplylift.co")
+        field_email.send_keys("club@exemple.com")
         time.sleep(2)
         field_email.submit()
         time.sleep(2)
-        assert "Welcome, john@simplylift.co" in self.driver.page_source
+        assert "club@exemple.com" in self.driver.page_source
 
     def test_story2_login_scanario2(self):
         """
@@ -96,7 +67,7 @@ class TestStories:
         the list of competitions ordered by decrease date
         """
         self.test_story1_login_scenario1()
-        assert "Points available: 13" in self.driver.page_source
+        assert "Points available: 13" in self.driver.page_source        
         assert False
 
     def test_story5_bookinfo(self):
@@ -124,7 +95,7 @@ class TestStories:
         field_places.submit()
         assert "Your club have not enough points"\
             in self.driver.page_source
-        time.sleep(2)     
+        time.sleep(2)
         assert False
         # TODO : need to load a test database for assert more than
         # number of places in competition
@@ -153,4 +124,3 @@ class TestStories:
         field_places.submit()
         assert "You cannot book more than 12 places"\
             in self.driver.page_source
-

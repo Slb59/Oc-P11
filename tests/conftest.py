@@ -5,7 +5,7 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
 
 from gudlft.server import app
-from gudlft.db import Club, Competition
+from gudlft.models.db import Club, Competition
 
 
 @pytest.fixture
@@ -75,3 +75,11 @@ def test_competitions_data():
         Competition(**competition1_dict),
         Competition(**competition2_dict)
     ]
+
+
+# @pytest.fixture
+# def mock_load_data():
+#     data = DataLoader(
+#         club_file='test2_clubs.json',
+#         competition_file='test2_competitions.json'
+#     )

@@ -4,7 +4,7 @@ import gudlft.server as server
 
 from http import HTTPStatus
 from gudlft.server import app
-from gudlft.db import DataLoader
+from gudlft.models.dataloader import DataLoader
 
 
 class TestPurchasePlaces:
