@@ -1,5 +1,5 @@
 import os
-
+from datetime import datetime
 from distutils.util import strtobool
 
 from flask import Flask, render_template, request, redirect, flash, url_for
@@ -36,7 +36,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/showSummary', methods=['POST', 'GET'])
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
     try:
         club = [
@@ -58,23 +58,40 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in data.clubs if c.name == club][0]
-    foundCompetition = [
-        c for c in data.competitions if c.name == competition
-        ][0]
-    if foundClub and foundCompetition:
-        return render_template(
-            'booking.html',
-            club=foundClub,
-            competition=foundCompetition
-            )
-    else:
-        flash("Something went wrong-please try again")
-        return render_template(
-            'welcome.html',
-            club=club,
-            competitions=data.competitions
-            )
+    status_code = 200
+    try:
+        found_club = [c for c in data.clubs if c.name == club][0]
+        found_competition = [
+            c for c in data.competitions if c.name == competition
+            ][0]
+        if found_club and found_competition:
+            date_competition = datetime.strptime(
+                found_competition.date, '%Y-%m-%d %H:%M:%S')
+            if date_competition < datetime.now():
+                flash("Error: This competition is over !", "error")
+                status_code = 400
+            # else:
+            #     return render_template(
+            #         'booking.html',
+            #         club=found_club,
+            #         future_competitions=data.future_competitions,
+            #         past_competitions=data.past_competitions
+            #         )
+        else:
+            flash("Something went wrong-please try again", "error")
+            status_code = 404
+
+    except IndexError:
+        flash("Something went wrong-please try again", "error")
+        status_code = 404
+
+    return render_template(
+                'welcome.html',
+                club=club,
+                future_competitions=data.future_competitions,
+                past_competitions=data.past_competitions
+                ), status_code
+    
 
 
 @app.route('/purchasePlaces', methods=['POST'])

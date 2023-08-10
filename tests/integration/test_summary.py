@@ -1,7 +1,5 @@
-# from freezegun import freeze_time
 import gudlft.server as server
 from gudlft.server import app
-# from gudlft.models.dataloader import DataLoader
 
 
 class TestSummary:
@@ -17,7 +15,7 @@ class TestSummary:
         # mocker.patch.object(server, 'client', client)
         self.client = app.test_client()
         mocker.patch.object(server, 'data', mock_test_data)
-        response = self.client.get(
+        response = self.client.post(
             '/showSummary',
             data={'email': 'club@exemple.com'}
         )
