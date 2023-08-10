@@ -10,6 +10,8 @@ def test_book_in_future(mocker, mock_test_data):
         '/book/Competition future/club for test'
         )
     assert response.status_code == HTTPStatus.OK
+    data = response.data.decode()
+    assert "<h2>Competition future</h2>" in data
 
 
 def test_book_in_past(mocker, mock_test_data):

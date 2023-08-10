@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from distutils.util import strtobool
+from http import HTTPStatus
 
 from flask import Flask, render_template, request, redirect, flash, url_for
 
@@ -58,7 +59,7 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    status_code = 200
+    status_code = HTTPStatus.OK
     try:
         found_club = [c for c in data.clubs if c.name == club][0]
         found_competition = [
@@ -69,21 +70,20 @@ def book(competition, club):
                 found_competition.date, '%Y-%m-%d %H:%M:%S')
             if date_competition < datetime.now():
                 flash("Error: This competition is over !", "error")
-                status_code = 400
-            # else:
-            #     return render_template(
-            #         'booking.html',
-            #         club=found_club,
-            #         future_competitions=data.future_competitions,
-            #         past_competitions=data.past_competitions
-            #         )
+                status_code = HTTPStatus.BAD_REQUEST
+            else:
+                return render_template(
+                    'booking.html',
+                    club=found_club,
+                    competition=found_competition
+                    )
         else:
             flash("Something went wrong-please try again", "error")
-            status_code = 404
+            status_code = HTTPStatus.NOT_FOUND
 
     except IndexError:
         flash("Something went wrong-please try again", "error")
-        status_code = 404
+        status_code = HTTPStatus.NOT_FOUND
 
     return render_template(
                 'welcome.html',
@@ -91,7 +91,6 @@ def book(competition, club):
                 future_competitions=data.future_competitions,
                 past_competitions=data.past_competitions
                 ), status_code
-    
 
 
 @app.route('/purchasePlaces', methods=['POST'])
