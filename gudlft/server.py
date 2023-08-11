@@ -108,7 +108,8 @@ def purchasePlaces():
         return render_template(
             'welcome.html',
             club=club,
-            competitions=data.competitions
+            future_competitions=data.future_competitions,
+            past_competitions=data.past_competitions
             )
     except Exception as e_info:
         flash(str(e_info))
