@@ -1,7 +1,8 @@
 import json
 
 from datetime import datetime
-from .db import Club, Competition
+from .club import Club
+from .competition import Competition
 
 
 class DataLoader:
@@ -22,7 +23,7 @@ class DataLoader:
             self.past_competitions.sort(
                 key=lambda x: x.date, reverse=True)
             self.future_competitions.sort(
-                key=lambda x: x.date, reverse=True)    
+                key=lambda x: x.date, reverse=True)
 
     def _loadClubs(self) -> list:
 

@@ -8,7 +8,8 @@ from freezegun import freeze_time
 
 from gudlft.server import app
 from gudlft.models.dataloader import DataLoader
-from gudlft.models.db import Club, Competition
+from gudlft.models.competition import Competition
+from gudlft.models.club import Club
 
 
 @pytest.fixture
