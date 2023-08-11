@@ -38,7 +38,7 @@ def index():
 
 
 @app.route('/showSummary', methods=['POST'])
-def showSummary():
+def show_summary():
     try:
         club = [
             club for club in data.clubs
@@ -94,7 +94,7 @@ def book(competition, club):
 
 
 @app.route('/purchasePlaces', methods=['POST'])
-def purchasePlaces():
+def purchase_places():
     competition = [
         c for c in data.competitions
         if c.name == request.form['competition']
@@ -118,7 +118,9 @@ def purchasePlaces():
             )
 
 
-# TODO: Add route for points display
+@app.route('/showPointsDisplayBoard')
+def view_board():
+    return render_template('board.html', clubs=data.clubs)
 
 
 @app.route('/logout')

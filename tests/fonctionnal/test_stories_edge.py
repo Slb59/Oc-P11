@@ -167,6 +167,8 @@ class TestStories:
         Then The system displays the liste of other clubs
         and their points
         """
+        field_book = self.driver.find_element(By.CLASS_NAME, "board_link")
+        field_book.click()
         data = self.driver.page_source
         data_list = [y for y in (x.strip() for x in data.splitlines()) if y]
         print(data_list)
