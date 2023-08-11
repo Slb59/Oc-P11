@@ -1,10 +1,9 @@
 import html
 import gudlft.server as server
-# import os
 
 from http import HTTPStatus
 from gudlft.server import app
-from gudlft.db import DataLoader
+from gudlft.models.dataloader import DataLoader
 
 
 class TestPurchasePlaces:
@@ -123,6 +122,5 @@ class TestPurchasePlaces:
             }
         )
         data = result.data.decode()
-        # print(data)
         assert "You cannot purchase more than 12 places for a competition"\
             in data

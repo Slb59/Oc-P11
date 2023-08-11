@@ -1,16 +1,54 @@
 import pytest
 
+from selenium import webdriver
+from selenium.webdriver.edge.options import Options
+from selenium.webdriver.edge.service import Service
+
+from freezegun import freeze_time
+
 from gudlft.server import app
-from gudlft.db import Club, Competition
+from gudlft.models.dataloader import DataLoader
+from gudlft.models.db import Club, Competition
 
 
 @pytest.fixture
 def client():
-
     # app = create_app({"TESTING": True})
-
     with app.test_client() as client:
         yield client
+
+
+@pytest.fixture
+def driver_edge_init(request):
+    options = Options()
+    options.use_chromium = True
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    # options.add_argument('--headless')
+    service = Service(
+        executable_path="tests/fonctionnal/msedgedriver.exe"
+        )
+    edge_driver = webdriver.Edge(
+        service=service,
+        options=options,
+        )
+    request.cls.driver = edge_driver
+
+    edge_driver.get("http://127.0.0.1:5000/")
+    edge_driver.minimize_window()
+    edge_driver.maximize_window()
+
+    yield
+
+    edge_driver.quit()
+
+
+@pytest.fixture
+@freeze_time("2023-08-01 00:00:00")
+def mock_test_data():
+    return DataLoader(
+            club_file='test_clubs.json',
+            competition_file='test_competitions.json'
+        )
 
 
 @pytest.fixture
@@ -49,3 +87,11 @@ def test_competitions_data():
         Competition(**competition1_dict),
         Competition(**competition2_dict)
     ]
+
+
+# @pytest.fixture
+# def mock_load_data():
+#     data = DataLoader(
+#         club_file='test2_clubs.json',
+#         competition_file='test2_competitions.json'
+#     )

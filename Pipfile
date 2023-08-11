@@ -23,6 +23,7 @@ urllib3 = "*"
 questionary = "*"
 environ = "*"
 ipython = "*"
+freezegun = "*"
 
 [dev-packages]
 

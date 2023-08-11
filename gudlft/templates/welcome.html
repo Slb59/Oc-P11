@@ -9,9 +9,9 @@
 
     {% include 'message.html' %}
     Points available: {{club['points']}}
-    <h3>Competitions:</h3>
+    <h3>List of upcoming competitions:</h3>
     <ul>
-        {% for comp in competitions%}
+        {% for comp in future_competitions%}
         <li>
             {{comp.name}}<br />
             Date: {{comp.date}}</br>
@@ -19,6 +19,18 @@
             {%if comp.number_of_places|int >0%}
             <a href="{{ url_for('book',competition=comp.name,club=club.name) }}" class="book_link">Book Places</a>
             {%endif%}
+        </li>
+        <hr />
+        {% endfor %}
+    </ul>
+    <hr>
+    <h3> List of past competitions:</h3>   
+    <ul>
+        {% for comp in past_competitions%}
+        <li>
+            {{comp.name}}<br />
+            Date: {{comp.date}}</br>
+            Number of Places: {{comp.number_of_places}}
         </li>
         <hr />
         {% endfor %}

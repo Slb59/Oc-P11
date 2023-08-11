@@ -1,4 +1,4 @@
-from gudlft.db import Club, Competition, Order
+from gudlft.models.db import Club, Competition, Order
 
 
 class TestOrder:

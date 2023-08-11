@@ -2,7 +2,7 @@ import gudlft.server as server
 
 from http import HTTPStatus
 from gudlft.server import app
-from gudlft.db import DataLoader
+from gudlft.models.dataloader import DataLoader
 
 
 class TestLoginLogout:
@@ -35,8 +35,6 @@ class TestLoginLogout:
             data={'email': first_email_in_db}
         )
         assert response.status_code == HTTPStatus.OK
-        # data = response.data.decode()
-        # print(data)
         assert first_email_in_db in response.get_data(as_text=True)
 
     def test_post_login_KO(self):

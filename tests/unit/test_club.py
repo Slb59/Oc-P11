@@ -1,8 +1,9 @@
 import pytest
-from gudlft.db import (
+from gudlft.models.dataloader import DataLoader
+from gudlft.models.db import (
     NotEnoughtPointsError, NotEnoughtPlacesError,
     MaxPlacesPerCompetitionError,
-    DataLoader, Club, Competition, Order
+    Club, Competition, Order
 )
 
 

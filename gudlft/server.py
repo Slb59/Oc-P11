@@ -1,10 +1,11 @@
 import os
-
+from datetime import datetime
 from distutils.util import strtobool
+from http import HTTPStatus
 
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-from .db import DataLoader
+from .models.dataloader import DataLoader
 
 from dotenv import load_dotenv
 
@@ -46,8 +47,9 @@ def showSummary():
         return render_template(
                 'welcome.html',
                 club=club,
-                competitions=data.competitions
-                ) 
+                future_competitions=data.future_competitions,
+                past_competitions=data.past_competitions
+                )
     except IndexError:
         flash("!!! Cette adresse email n'est pas reconnue")
         return render_template(
@@ -57,23 +59,38 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in data.clubs if c.name == club][0]
-    foundCompetition = [
-        c for c in data.competitions if c.name == competition
-        ][0]
-    if foundClub and foundCompetition:
-        return render_template(
-            'booking.html',
-            club=foundClub,
-            competition=foundCompetition
-            )
-    else:
-        flash("Something went wrong-please try again")
-        return render_template(
-            'welcome.html',
-            club=club,
-            competitions=data.competitions
-            )
+    status_code = HTTPStatus.OK
+    try:
+        found_club = [c for c in data.clubs if c.name == club][0]
+        found_competition = [
+            c for c in data.competitions if c.name == competition
+            ][0]
+        if found_club and found_competition:
+            date_competition = datetime.strptime(
+                found_competition.date, '%Y-%m-%d %H:%M:%S')
+            if date_competition < datetime.now():
+                flash("Error: This competition is over !", "error")
+                status_code = HTTPStatus.BAD_REQUEST
+            else:
+                return render_template(
+                    'booking.html',
+                    club=found_club,
+                    competition=found_competition
+                    )
+        else:
+            flash("Something went wrong-please try again", "error")
+            status_code = HTTPStatus.NOT_FOUND
+
+    except IndexError:
+        flash("Something went wrong-please try again", "error")
+        status_code = HTTPStatus.NOT_FOUND
+
+    return render_template(
+                'welcome.html',
+                club=club,
+                future_competitions=data.future_competitions,
+                past_competitions=data.past_competitions
+                ), status_code
 
 
 @app.route('/purchasePlaces', methods=['POST'])
@@ -91,7 +108,8 @@ def purchasePlaces():
         return render_template(
             'welcome.html',
             club=club,
-            competitions=data.competitions
+            future_competitions=data.future_competitions,
+            past_competitions=data.past_competitions
             )
     except Exception as e_info:
         flash(str(e_info))
