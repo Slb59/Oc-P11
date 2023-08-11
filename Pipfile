@@ -24,6 +24,7 @@ questionary = "*"
 environ = "*"
 ipython = "*"
 freezegun = "*"
+pdoc3 = "*"
 
 [dev-packages]
 
