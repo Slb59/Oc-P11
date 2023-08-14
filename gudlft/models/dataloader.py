@@ -1,5 +1,7 @@
 import json
+import os
 
+from distutils.util import strtobool
 from datetime import datetime
 from .club import Club
 from .competition import Competition
@@ -26,7 +28,9 @@ class DataLoader:
                 key=lambda x: x.date, reverse=True)
 
     def _loadClubs(self) -> list:
-
+        """ Load club json file
+        and return a liste of Club instances
+        """
         filename = self.data_path + self.club_file
 
         with open(filename) as c:
@@ -35,19 +39,34 @@ class DataLoader:
             return clubs
 
     def _sort_competitions(self):
+        """
+        dispatch self.competitions in past_competition and
+        futur competition
+        """
+
+        # change datetime for functionnal testing
+        TESTING = strtobool(os.getenv('TESTING'))
+        current_date = datetime.now()
+        if TESTING:
+            current_date = "2023-08-01 00:00:00"
+            current_date = datetime.strptime(current_date, "%Y-%m-%d %H:%M:%S")
+
         competitions_in_past = []
         competition_in_future = []
         for competition in self.competitions:
             date_competition = datetime.strptime(
                 competition.date, '%Y-%m-%d %H:%M:%S'
                 )
-            if date_competition < datetime.now():
+            if date_competition < current_date:
                 competitions_in_past.append(competition)
             else:
                 competition_in_future.append(competition)
         return competitions_in_past, competition_in_future
 
     def _loadCompetitions(self):
+        """ Load competiton json file
+        and return a liste of Competition instances
+        """
 
         filename = self.data_path + self.competition_file
 
@@ -57,6 +76,9 @@ class DataLoader:
             return competitions
 
     def __str__(self):
+        """ Print list of clubs
+        and list of competitions
+        """
         message = "\nClubs: \n"
         for club in self.clubs:
             message += f"- {club}\n"

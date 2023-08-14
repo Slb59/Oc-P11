@@ -71,15 +71,16 @@ class TestStories:
         the list of competitions ordered by decrease date
         """
         self.test_story1_login_scenario1()
+        time.sleep(3)
         assert "Points available: 10" in self.driver.page_source
         data = self.driver.page_source
         data_list = [y for y in (x.strip() for x in data.splitlines()) if y]
-        print(data_list)
+        # print(data_list)
         try:
             i1 = data_list.index('<h3>List of upcoming competitions:</h3>')
             i2 = data_list.index('Test competition3<br>')
-            i3 = data_list.index('<h3> List of past competitions:</h3>')
-            i4 = data_list.index('Test competition2<br>')
+            i3 = data_list.index('Test competition2<br>')
+            i4 = data_list.index('<h3> List of past competitions:</h3>')            
             i5 = data_list.index('Test competition<br>')
             i6 = data_list.index('Test competition4<br>')
         except ValueError:

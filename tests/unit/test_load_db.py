@@ -63,7 +63,7 @@ class TestLoadDb:
             Competition(
                 "Spring Festival",
                 "2020-03-27 10:00:00",
-                "25")         
+                "25")    
         ]
         future_competitions = [
             Competition(

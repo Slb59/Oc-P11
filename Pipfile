@@ -25,6 +25,7 @@ environ = "*"
 ipython = "*"
 freezegun = "*"
 pdoc3 = "*"
+pytz = "*"
 
 [dev-packages]
 
