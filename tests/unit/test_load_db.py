@@ -1,6 +1,7 @@
 from freezegun import freeze_time
 from gudlft.models.dataloader import DataLoader
-from gudlft.models.db import Club, Competition
+from gudlft.models.competition import Competition
+from gudlft.models.club import Club
 
 
 class TestLoadDb:
@@ -62,7 +63,7 @@ class TestLoadDb:
             Competition(
                 "Spring Festival",
                 "2020-03-27 10:00:00",
-                "25")         
+                "25")    
         ]
         future_competitions = [
             Competition(

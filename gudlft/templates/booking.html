@@ -1,11 +1,5 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking for {{competition.name}} || GUDLFT</title>
-</head>
-<body>
-
+{% extends "base.html" %}
+{% block content %}
     <h2>{{competition.name}}</h2>
     <a href="{{url_for('logout')}}" class="logout_link">Logout</a>
     {% include 'message.html' %}
@@ -17,5 +11,4 @@
         <label for="places">How many places?</label><input type="number" name="places" id="number_of_places"/>
         <button type="submit">Book</button>
     </form>
-</body>
-</html>
+{% endblock content %}

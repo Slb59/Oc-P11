@@ -1,3 +1,4 @@
+from .order import Order
 
 
 class NotEnoughtPointsError(Exception):
@@ -84,29 +85,3 @@ class Club:
                 competition.number_of_places -= nb_of_places
                 self.points -= nb_of_places
                 self.orders.append(Order(self, competition, nb_of_places))
-
-
-class Competition:
-    def __init__(self, name, date, numberOfPlaces=0):
-        self.name = name
-        self.date = date
-        self.number_of_places = int(numberOfPlaces)
-
-    def __str__(self) -> str:
-        return f"<Competition - {self.name}>"
-
-    def __eq__(self, __value: object) -> bool:
-        return self.name == __value.name and self.date == __value.date
-
-
-class Order:
-    def __init__(self, club: Club, competition: Competition, nb_of_places):
-        self.club = club
-        self.competition = competition
-        self.nb_of_places = int(nb_of_places)
-
-    def __str__(self) -> str:
-        order_string = f'[{self.club.name} - {self.competition.name} '
-        order_string += f': {self.nb_of_places}]'
-        return order_string
-    

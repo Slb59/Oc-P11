@@ -1,10 +1,13 @@
 import pytest
+
 from gudlft.models.dataloader import DataLoader
-from gudlft.models.db import (
+from gudlft.models.competition import Competition
+from gudlft.models.club import (
     NotEnoughtPointsError, NotEnoughtPlacesError,
     MaxPlacesPerCompetitionError,
-    Club, Competition, Order
+    Club
 )
+from gudlft.models.order import Order
 
 
 class TestClub:

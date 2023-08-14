@@ -1,5 +1,7 @@
 import pytest
 
+# from datetime import datetime
+
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service
@@ -8,7 +10,10 @@ from freezegun import freeze_time
 
 from gudlft.server import app
 from gudlft.models.dataloader import DataLoader
-from gudlft.models.db import Club, Competition
+from gudlft.models.competition import Competition
+from gudlft.models.club import Club
+
+# from flask import jsonify
 
 
 @pytest.fixture
@@ -32,6 +37,14 @@ def driver_edge_init(request):
         options=options,
         )
     request.cls.driver = edge_driver
+
+
+# dt_string = "12/11/2018 09:15:32"
+# dt_object1 = datetime.strptime(dt_string, "%d/%m/%Y %H:%M:%S")
+
+    # current_date = "01/08/2023 09:15:32"
+    # current_date = datetime.strptime(current_date, "%d/%m/%Y %H:%M:%S")
+    # jsonify({"time": current_date})
 
     edge_driver.get("http://127.0.0.1:5000/")
     edge_driver.minimize_window()

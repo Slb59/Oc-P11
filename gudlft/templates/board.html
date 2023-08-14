@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Liste des clubs</h3>
+<a href="{{ url_for('index') }}">Retour</a><br>
+{% include 'message.html' %}
+<ul>
+    {% for club in clubs %}
+    <li>
+        {{club.name}} <br>
+        remaining points: {{ club.points }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock content %}
