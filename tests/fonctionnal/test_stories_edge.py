@@ -172,5 +172,11 @@ class TestStories:
         field_book.click()
         data = self.driver.page_source
         data_list = [y for y in (x.strip() for x in data.splitlines()) if y]
-        print(data_list)
-        assert False
+        time.sleep(2)
+        try:
+            i1 = data_list.index('club for test <br>')
+            i2 = data_list.index('club for test2 <br>')
+            i3 = data_list.index('club for test3 <br>')
+        except ValueError:
+            assert False
+        assert i1 < i2 and i2 < i3

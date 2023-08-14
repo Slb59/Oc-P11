@@ -17,8 +17,13 @@ class DataLoader:
         self.data_path = data_path
         self.club_file = club_file
         self.competition_file = competition_file
+
         if self.club_file is not None and self.competition_file is not None:
+            # load clubs
             self.clubs = self._loadClubs()
+            self.clubs.sort(key=lambda x: x.name)
+
+            # load competitions
             self.competitions = self._loadCompetitions()
             self.past_competitions, self.future_competitions\
                 = self._sort_competitions()
