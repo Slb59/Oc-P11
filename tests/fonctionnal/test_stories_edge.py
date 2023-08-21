@@ -138,7 +138,9 @@ class TestStories:
         and directs me to the summary page and no changes
         are saved in the system
         """
-        self.test_story1_login_scenario1()
+        field_email = self.driver.find_element(By.ID, "email_field")
+        field_email.send_keys("club2@exemple.com")
+        field_email.submit()
         # try to book 20 places
         field_book = self.driver.find_element(By.CLASS_NAME, "book_link")
         field_book.click()
@@ -146,7 +148,8 @@ class TestStories:
         field_places.send_keys("20")
         time.sleep(2)
         field_places.submit()
-        assert "You cannot book more than 12 places"\
+        # print(self.driver.page_source)
+        assert "You cannot purchase more than 12 places"\
             in self.driver.page_source
         # try to book 10 + 10 places
         field_places = self.driver.find_element(By.ID, "number_of_places")
@@ -159,7 +162,8 @@ class TestStories:
         field_places.send_keys("10")
         time.sleep(2)
         field_places.submit()
-        assert "You cannot book more than 12 places"\
+        # print(self.driver.page_source)
+        assert "You cannot purchase more than 12 places"\
             in self.driver.page_source
 
     def test_story9_displayboard(self):

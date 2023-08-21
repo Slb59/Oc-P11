@@ -24,6 +24,10 @@ class TestLoadDb:
             )
 
     def test_load_clubs(self, test_clubs_data):
+        """
+        When init instance, self.data.clubs
+        has correct value
+        """
         clubs = [
             Club(
                 "club for test",
@@ -33,6 +37,10 @@ class TestLoadDb:
         assert self.data.clubs == clubs
 
     def test_load_competitions(self):
+        """
+        When init instance, self.data.competitions
+        has correct value
+        """
         competitions = [
             Competition(
                 "Spring Festival",
@@ -55,6 +63,10 @@ class TestLoadDb:
 
     @freeze_time("2023-08-01 00:00:00")
     def test_sort_competition(self):
+        """
+        When init instance, self.data.past_competitions 
+        and future_compeitions has correct value
+        """
         past_competitions = [
             Competition(
                 "Fall Classic",
@@ -86,3 +98,22 @@ class TestLoadDb:
             print(c)
         assert self.data.past_competitions == past_competitions
         assert self.data.future_competitions == future_competitions
+
+    def test_print_data(self):
+        """
+        When init instance then I can print it
+        """
+        self.data = DataLoader(
+            club_file='test_clubs.json',
+            competition_file='test_competitions.json'
+            )
+        print(self.data)
+        message = "\nClubs: \n"
+        message += "- <Club - club for test>\n\n"
+        message += "Competitions: \n"
+        message += "- <Competition - Spring Festival>\n"
+        message += "- <Competition - Fall Classic>\n"
+        message += "- <Competition - Competition future>\n"
+        message += "- <Competition - Competition passee>\n"
+        print(message)
+        assert str(self.data) == message

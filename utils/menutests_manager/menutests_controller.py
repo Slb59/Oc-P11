@@ -1,5 +1,3 @@
-# import sys
-import os
 import pytest
 
 from .menutests_view import MenuTestView
@@ -42,10 +40,9 @@ class MenuTestManager:
                     pytest.main(list(args))
 
                 case 2:
-                    os.environ['TESTING'] = 'True'
                     args = ['tests/fonctionnal']
                     pytest.main(args)
 
                 case 3:
-                    args = ['--cov=gudlft --cov-report html']
+                    args = ['--cov=./gudlft --cov-report html']
                     pytest.main(args)
