@@ -22,6 +22,7 @@ class DataLoader:
             # load clubs
             self.clubs = self._loadClubs()
             self.clubs.sort(key=lambda x: x.name)
+            self.current_club = None
 
             # load competitions
             self.competitions = self._loadCompetitions()

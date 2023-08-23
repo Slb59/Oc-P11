@@ -34,31 +34,45 @@ else:
 # define routes
 @app.route('/')
 def index():
+    """ display login form """
     return render_template('index.html')
 
 
-@app.route('/showSummary', methods=['POST'])
+@app.route('/showSummary', methods=['POST', 'GET'])
 def show_summary():
-    try:
-        club = [
-            club for club in data.clubs
-            if club.email == request.form['email']
-            ][0]
-        return render_template(
-                'welcome.html',
-                club=club,
-                future_competitions=data.future_competitions,
-                past_competitions=data.past_competitions
-                )
-    except IndexError:
-        flash("!!! Cette adresse email n'est pas reconnue")
-        return render_template(
-            'index.html'
-            )
+    """ display the summary if login """
+    match request.method:
+        case 'POST':
+            try:
+                club = [
+                    club for club in data.clubs
+                    if club.email == request.form['email']
+                    ][0]
+                return render_template(
+                        'welcome.html',
+                        club=club,
+                        future_competitions=data.future_competitions,
+                        past_competitions=data.past_competitions
+                        )
+            except IndexError:
+                flash("!!! Cette adresse email n'est pas reconnue")
+                return render_template(
+                    'index.html'
+                    )
+        case 'GET':
+            if data.current_club is not None:
+                return render_template(
+                    'welcome.html', club=data.current_club,
+                    future_competitions=data.future_competitions,
+                    past_competitions=data.past_competitions
+                    )
+            else:
+                return redirect(url_for('index'))
 
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+    """ display competition/club statut """
     status_code = HTTPStatus.OK
     try:
         found_club = [c for c in data.clubs if c.name == club][0]
@@ -95,6 +109,7 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
+    """ purchase places function """
     competition = [
         c for c in data.competitions
         if c.name == request.form['competition']
@@ -120,9 +135,12 @@ def purchase_places():
 
 @app.route('/showPointsDisplayBoard')
 def view_board():
+    """ display all clubs informations """
     return render_template('board.html', clubs=data.clubs)
 
 
 @app.route('/logout')
 def logout():
+    """ redirect to home page if logout """
+    data.current_club = None
     return redirect(url_for('index'))

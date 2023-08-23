@@ -71,7 +71,7 @@ class TestPurchasePlaces:
         assert server.data.clubs[0].points == \
             club_points_before
         data = result.data.decode()
-        print(html.unescape(data))
+        # print(html.unescape(data))
         assert "<li>Your club doesn't have enough points</li>"\
             in html.unescape(data)
 
