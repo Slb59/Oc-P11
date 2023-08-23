@@ -38,14 +38,6 @@ def driver_edge_init(request):
         )
     request.cls.driver = edge_driver
 
-
-# dt_string = "12/11/2018 09:15:32"
-# dt_object1 = datetime.strptime(dt_string, "%d/%m/%Y %H:%M:%S")
-
-    # current_date = "01/08/2023 09:15:32"
-    # current_date = datetime.strptime(current_date, "%d/%m/%Y %H:%M:%S")
-    # jsonify({"time": current_date})
-
     edge_driver.get("http://127.0.0.1:5000/")
     edge_driver.minimize_window()
     edge_driver.maximize_window()
