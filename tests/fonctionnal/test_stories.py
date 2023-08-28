@@ -1,12 +1,12 @@
-import time
+# import time
 # import multiprocessing as mp
 # from flask import Flask
-import urllib3
+# import urllib3
 from flask_testing import LiveServerTestCase
-from selenium.webdriver.common.by import By
-from selenium import webdriver
-from selenium.webdriver.edge.options import Options
-from selenium.webdriver.edge.service import Service
+# from selenium.webdriver.common.by import By
+# from selenium import webdriver
+# from selenium.webdriver.edge.options import Options
+# from selenium.webdriver.edge.service import Service
 from gudlft.server import app
 
 
@@ -27,7 +27,8 @@ class TestAppStories(LiveServerTestCase):
     #     super().setUpClass()
     #     options = Options()
     #     options.use_chromium = True
-    #     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    #     options.add_experimental_option(
+    # 'excludeSwitches', ['enable-logging'])
     #     # options.add_argument('--headless')
     #     service = Service(
     #         executable_path="tests/fonctionnal/msedgedriver.exe"
@@ -40,7 +41,7 @@ class TestAppStories(LiveServerTestCase):
     #     cls.driver.implicitly_wait(10)
     #     # cls.url = cls.live_server_url
     #     super(TestAppStories, cls).setUpClass()
-    
+
     # @classmethod
     # def tearDownClass(cls):
     #     cls.driver.quit()
@@ -50,12 +51,13 @@ class TestAppStories(LiveServerTestCase):
         ...
         # options = Options()
         # options.use_chromium = True
-        # options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        # options.add_experimental_option(
+        # 'excludeSwitches', ['enable-logging'])
         # # options.add_argument('--headless')
         # service = Service(
         #     executable_path="tests/fonctionnal/msedgedriver.exe"
         #     )
-        
+
         # self.driver = webdriver.Edge(
         #     service=service,
         #     options=options,

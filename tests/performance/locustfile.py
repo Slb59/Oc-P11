@@ -2,6 +2,7 @@ from locust import HttpUser, task
 
 
 class GudlftPerfTest(HttpUser):
+    host = "http://127.0.0.1:5000"
 
     @task
     def home(self):
