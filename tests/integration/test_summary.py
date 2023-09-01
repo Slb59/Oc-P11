@@ -1,19 +1,10 @@
 from http import HTTPStatus
-from flask import url_for
 
 import gudlft.server as server
 from gudlft.server import app
-# from gudlft.models.club import Club
 
 
 class TestSummary:
-
-    # def setup_method(self):
-    #     self.client = app.test_client()
-    #     server.data = DataLoader(
-    #         club_file='test_clubs.json',
-    #         competition_file='test_competitions.json'
-    #     )
 
     def test_post_showsummary(self, mocker, client, mock_test_data):
         """ test showSummary route with email
@@ -39,9 +30,9 @@ class TestSummary:
         """ test get showSummary with a current club set """
         self.client = app.test_client()
         mocker.patch.object(server, 'data', mock_test_data)
+        mock_test_data.current_club = mock_test_data.clubs[0]
         response = self.client.get('/showSummary')
         assert response.status_code == HTTPStatus.OK
-        assert response.path == url_for('show_summary')
 
     def test_get_showsummary_without_currentclub(self, mocker, mock_test_data):
         """ test get showSummary without current club set """
@@ -49,8 +40,8 @@ class TestSummary:
         mocker.patch.object(server, 'data', mock_test_data)
         mock_test_data.current_club = None
         response = self.client.get('/showSummary')
-        assert response.status_code == HTTPStatus.OK
-        assert response.path == url_for('index')
+        assert response.status_code == 302
+        assert response.headers['Location'] == 'http://localhost/'
 
     def test_show_board(self, mocker,  mock_test_data):
         """ test the showPointDisplayBoard route """
