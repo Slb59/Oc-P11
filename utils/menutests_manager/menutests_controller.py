@@ -40,7 +40,7 @@ class MenuTestManager:
                     pytest.main(list(args))
 
                 case 2:
-                    args = ['tests/fonctionnal']
+                    args = ['tests/fonctionnal/test_stories_edge.py']
                     pytest.main(args)
 
                 case 3:
