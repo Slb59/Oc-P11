@@ -1,14 +1,14 @@
 import webbrowser
 import gevent
 # import subprocess
-import importlib, importlib.util
+import importlib
+import importlib.util
 
-from multiprocessing import Process
+# from multiprocessing import Process
 from locust.env import Environment
 from locust import events
 from locust.stats import stats_printer, stats_history
 
-# from gudlft.server import app
 from locustfile import GudlftPerfTest
 
 
@@ -39,7 +39,8 @@ def start_locust():
     # start a WebUI instance
     web_ui = env.create_web_ui("localhost", 8089)
 
-    # execute init event handlers (only really needed if you have registered any)
+    # execute init event handlers
+    # (only really needed if you have registered any)
     env.events.init.fire(environment=env, runner=runner, web_ui=web_ui)
 
     # start a greenlet that periodically outputs the current stats
@@ -63,7 +64,8 @@ def start_locust():
     print('Rapport des tests de performance')
     print('--------------------------------')
     print(f'fail_ratio: {env.runner.stats.total.fail_ratio:.0f} %')
-    print(f'avg_response_time: {env.runner.stats.total.avg_response_time:.0f} ms')
+    s = f'avg_response_time: {env.runner.stats.total.avg_response_time:.0f} ms'
+    print(s)
 
 
 start_flaskapp()
